@@ -22,13 +22,23 @@ var name_list = {
 
 //PとFGの人数
 //指定した数だけフォームに入力できる & firebaseにデータが送信される、ようにしたいな。
-var p_num = 5;
-var fg_num = 5;
+var p_num = 6;
+var fg_num = 6;
 /*-------------------------------*/
 
 
 
 //各入力フォームの名前が正しいかの確認用のフラグ
+var p_flag = [];
+for(var i=0; i<p_num; i++) {
+  p_flag[i] = 0;
+}
+var fg_flag = [];
+for(var i=0; i<fg_num; i++) {
+  fg_flag[i] = 0;
+}
+
+/*
 var p1_flag = 0;
 var p2_flag = 0;
 var p3_flag = 0;
@@ -39,6 +49,7 @@ var fg2_flag = 0;
 var fg3_flag = 0;
 var fg4_flag = 0;
 var fg5_flag = 0;
+*/
 
 
 //入力フォーム内にここに書かれていない文字列が入ると赤色に変化する
@@ -101,8 +112,31 @@ var selfID = "";
 function submit(thisId){
   var value = document.getElementById(thisId).value;
   
+  var p_ids = []
+  for(var i=0; i<p_num; i++) {
+    p_ids[i] = "p"+String(i+1);
+  }
+  var fg_ids = []
+  for(var i=0; i<fg_num; i++) {
+    fg_ids[i] = "fg"+String(i+1);
+  }
+  
   if(list.indexOf(value) >= 0){
     document.getElementById(thisId).style.backgroundColor = "#FFFFFF";
+    
+    for(var i=0; i<p_num; i++) {
+      if(thisId == p_ids[i]) {
+        p_flag[i] = 1;
+      }
+    }
+    
+    for(var i=0; i<fg_num; i++) {
+      if(thisId == fg_ids[i]) {
+        fg_flag[i] = 1;
+      }
+    }
+    
+    /*
     switch(thisId){
       case "p1":
         p1_flag = 1;
@@ -135,9 +169,25 @@ function submit(thisId){
         fg5_flag = 1;
         break;
     }
+    */
     return true;
+    
   }else{
     document.getElementById(thisId).style.backgroundColor = "mistyrose";
+    
+    for(var i=0; i<p_num; i++) {
+      if(thisId == p_ids[i]) {
+        p_flag[i] = 0;
+      }
+    }
+    
+    for(var i=0; i<fg_num; i++) {
+      if(thisId == fg_ids[i]) {
+        fg_flag[i] = 0;
+      }
+    }
+    
+    /*
     switch(thisId){
       case "p1":
         p1_flag = 0;
@@ -170,6 +220,8 @@ function submit(thisId){
         fg5_flag = 0;
         break;
     }
+    */
+    
     return false;
   }
 }
@@ -199,6 +251,12 @@ var check_p_list = [
   "check_p4",
   "check_p5",
 ];
+var text_p_list = [];
+for(var i=0; i<p_num; i++) {
+  text_p_list[i] = "p"+String(i+1);
+}
+text_p_list.push("submit_vote");
+/*
 var text_p_list = [
   "p1",
   "p2",
@@ -207,11 +265,18 @@ var text_p_list = [
   "p5",
   "submit_vote",
 ];
+*/
 var check_fg_list = [
   "check_fg1",
   "check_fg2",
   "check_fg3",
 ];
+var text_fg_list = [];
+for(var i=0; i<fg_num; i++) {
+  text_fg_list[i] = "fg"+String(i+1);
+}
+text_p_list.push("submit_vote");
+/*
 var text_fg_list = [
   "fg1",
   "fg2",
@@ -220,6 +285,7 @@ var text_fg_list = [
   "fg5",
   "submit_vote",
 ]
+*/
 
 /*
 // チェックボックスを全てチェックすると入力フォームがabledになる
@@ -338,8 +404,18 @@ async function btn_send(){
   
   /* firebaseにデータを送信 */
   //テキストボックスのidをまとめた配列。検索しやすくするために用意した。
+  var p_form = [];
+  for(var i=0; i<p_num; i++) {
+    p_form[i] = "p"+String(i+1);
+  }
+  var fg_form = [];
+  for(var i=0; i<fg_num; i++) {
+    fg_form[i] = "fg"+String(i+1);
+  }
+  /*
   var p_form = ['p1','p2','p3','p4','p5'];
   var fg_form = ['fg1','fg2','fg3','fg4','fg5'];
+  */
   //各テキストボックスの値を記録するための配列。
   var p_form_value = new Array(5);
   var fg_form_value = new Array(5);
@@ -377,13 +453,31 @@ async function btn_send(){
   }
   
   var p_num_check = false;
+  var p_flag_sum = 0;
+  p_flag.forEach(function(value) {
+    p_flag_sum += value;
+  })
+  if(p_flag_sum == count_p_num) {
+    p_num_check = true;
+  }
+  /*
   if(p1_flag+p2_flag+p3_flag+p4_flag+p5_flag == count_p_num){
     p_num_check = true;
   }
+  */
   var fg_num_check = false;
+  var fg_flag_sum = 0;
+  fg_flag.forEach(function(value) {
+    fg_flag_sum += value;
+  })
+  if(fg_flag_sum == count_fg_num) {
+    fg_num_check = true;
+  }
+  /*
   if(fg1_flag+fg2_flag+fg3_flag+fg4_flag+fg5_flag == count_fg_num){
     fg_num_check = true;
   }
+  */
   
   //再投票を禁止する（既にfirebaseに自分が投票したデータが有る場合は送信できなくする） 
   //ここで投票済みの人物のリストを作り、下のif文内のvoters_list.indexOf(selfID)<0で投票済みかをチェックする
