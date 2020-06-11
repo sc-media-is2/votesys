@@ -1,9 +1,14 @@
 # ゼミ用投票システム
 
-- index.html がメインファイル
+- index.html がメインファイル(投票画面)
 - login.html がログイン用
-- utilslib.js が全体用の
-- vote_style.css が全体の CSS
+- result.html が結果画面
+- read_firebase.js はfirebase関連
+- login.js はログイン画面用のjsファイル
+- vote.cssとvote.jsは投票画面用のcssとjsファイル(年度毎に更新して欲しいのはコレ)
+- result.cssとresult.jsは結果画面用のcssとjsファイル
+- utilslib.js が全体用のjsファイル
+- index_old.html、vote_old.css、vote_old.jsについては動作に問題が無ければ削除して大丈夫です
 
 ## 研究室の3名での制作
 
