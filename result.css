@@ -1,0 +1,9 @@
+/*投票結果画面のcssファイル*/
+h1{
+  text-align: center;
+}
+
+.container{
+  display: flex;
+  justify-content: center;
+}
