@@ -28,6 +28,7 @@ var fg_num = 6;
 
 
 
+
 //各入力フォームの名前が正しいかの確認用のフラグ
 var p_flag = [];
 for(var i=0; i<p_num; i++) {
@@ -37,20 +38,6 @@ var fg_flag = [];
 for(var i=0; i<fg_num; i++) {
   fg_flag[i] = 0;
 }
-
-/*
-var p1_flag = 0;
-var p2_flag = 0;
-var p3_flag = 0;
-var p4_flag = 0;
-var p5_flag = 0;
-var fg1_flag = 0;
-var fg2_flag = 0;
-var fg3_flag = 0;
-var fg4_flag = 0;
-var fg5_flag = 0;
-*/
-
 
 //入力フォーム内にここに書かれていない文字列が入ると赤色に変化する
 var list = [];
@@ -74,29 +61,6 @@ name_list_forMap.forEach(row => {
   row[1].forEach(name => dictMap2.set(name, row[0]))
 });
 
-/*
-[
-    ["Ghita", ["ghita", "Ghita","ギータ","ぎーた"]],
-    ["Koyama", ["koyama", "Koyama", "小山", "こやま"]],
-    ["Mochida", ["mochida", "Mochida", "持田", "もちだ"]],
-    ["Yao", ["yao", "Yao", "you","You","姚", "よう"]],
-    ["Kase", ["kase", "Kase", "加瀬", "かせ"]],
-    ["Seki", ["seki", "Seki", "関", "せき"]],
-    ["Zhang", ["zhang","Zhang","chou", "Chou", "張", "ちょう"]],
-    ["Ogino", ["ogino", "Ogino", "荻野", "おぎの"]],
-    ["Ikeda", ["ikeda", "Ikeda", "池田", "いけだ"]],
-    ["Maemoto", ["maemoto", "Maemoto", "前本", "まえもと"]],
-    ["Sakamoto", ["sakamoto", "Sakamoto", "坂元", "さかもと"]],
-    ["Kobayashi", ["kobayashi", "Kobayashi", "小林", "こばやし"]],
-    ["Gotou", ["gotou", "Gotou", "後藤", "ごとう"]],
-    ["Ueda", ["ueda", "Ueda", "植田", "うえだ"]],
-    ["Ni", ["ni", "Ni", "ニー", "にー"]],
-    ["Matsubara", ["matsubara", "Matsubara", "松原", "まつばら"]],
-  ].forEach(row => {
-    row[1].forEach(name => dictMap2.set(name, row[0]))
-  });
-  */
-
 //firebase内の投票データからその日投票済みの人の名前を取得して格納するリスト。再投票を禁止するために使用。
 var voters_list = [];
 
@@ -105,7 +69,6 @@ var voters_list = [];
 var login_user_email = "";
 getUserName(db,'/user_name/'+String(Year));
 var selfID = "";
-
 
 
 // 入力フォーム内に入力された名前を確認、listに登録されたもの以外が入ると赤色に変化する。
@@ -136,40 +99,6 @@ function submit(thisId){
       }
     }
     
-    /*
-    switch(thisId){
-      case "p1":
-        p1_flag = 1;
-        break;
-      case "p2":
-        p2_flag = 1;
-        break;
-      case "p3":
-        p3_flag = 1;
-        break;
-      case "p4":
-        p4_flag = 1;
-        break;
-      case "p5":
-        p5_flag = 1;
-        break;
-      case "fg1":
-        fg1_flag = 1;
-        break;
-      case "fg2":
-        fg2_flag = 1;
-        break;
-      case "fg3":
-        fg3_flag = 1;
-        break;
-      case "fg4":
-        fg4_flag = 1;
-        break;
-      case "fg5":
-        fg5_flag = 1;
-        break;
-    }
-    */
     return true;
     
   }else{
@@ -186,41 +115,6 @@ function submit(thisId){
         fg_flag[i] = 0;
       }
     }
-    
-    /*
-    switch(thisId){
-      case "p1":
-        p1_flag = 0;
-        break;
-      case "p2":
-        p2_flag = 0;
-        break;
-      case "p3":
-        p3_flag = 0;
-        break;
-      case "p4":
-        p4_flag = 0;
-        break;
-      case "p5":
-        p5_flag = 0;
-        break;
-      case "fg1":
-        fg1_flag = 0;
-        break;
-      case "fg2":
-        fg2_flag = 0;
-        break;
-      case "fg3":
-        fg3_flag = 0;
-        break;
-      case "fg4":
-        fg4_flag = 0;
-        break;
-      case "fg5":
-        fg5_flag = 0;
-        break;
-    }
-    */
     
     return false;
   }
@@ -256,16 +150,7 @@ for(var i=0; i<p_num; i++) {
   text_p_list[i] = "p"+String(i+1);
 }
 text_p_list.push("submit_vote");
-/*
-var text_p_list = [
-  "p1",
-  "p2",
-  "p3",
-  "p4",
-  "p5",
-  "submit_vote",
-];
-*/
+
 var check_fg_list = [
   "check_fg1",
   "check_fg2",
@@ -276,127 +161,6 @@ for(var i=0; i<fg_num; i++) {
   text_fg_list[i] = "fg"+String(i+1);
 }
 text_p_list.push("submit_vote");
-/*
-var text_fg_list = [
-  "fg1",
-  "fg2",
-  "fg3",
-  "fg4",
-  "fg5",
-  "submit_vote",
-]
-*/
-
-/*
-// チェックボックスを全てチェックすると入力フォームがabledになる
-function p_checkbox_check(){
-  var check_list = new Array(5);
-  
-  check_list[0] = document.getElementById("check_p1").checked;
-  check_list[1] = document.getElementById("check_p2").checked;
-  check_list[2] = document.getElementById("check_p3").checked;
-  check_list[3] = document.getElementById("check_p4").checked;
-  check_list[4] = document.getElementById("check_p5").checked;
-  
-  // チェックボックスの状態を確認
-  // 押されていないものがあれば名前を入力できない
-  var check_flag = 0;
-  for(var i = 0; i < check_list.length; i++){
-    if(check_list[i] != true){
-      check_flag = 1;
-      break;
-    }
-  }
-  
-  // 全てのチェックボックスがチェックされていたら入力できるようにする
-  var p_form = ['p1','p2','p3','p4','p5','p6'];
-  
-  if(check_flag == 0){
-    for(var i=0; i<p_num; i++){
-      document.p_form.elements[i].disabled = false;
-      //document.fg_form.elements[i].disabled = false;
-      document.getElementById(p_form[i]).style.borderColor = "#000000";
-    }
-  }else if(check_flag != 0){
-    for(var i=0; i<p_num; i++){
-      document.p_form.elements[i].disabled = true;
-      //document.fg_form.elements[i].disabled = true;
-    }
-  }
-}
-
-
-function fg_checkbox_check(){
-  var check_list = new Array(3);
-  
-  check_list[0] = document.getElementById("check_fg1").checked;
-  check_list[1] = document.getElementById("check_fg2").checked;
-  check_list[2] = document.getElementById("check_fg3").checked;
-  
-  // チェックボックスの状態を確認
-  // 押されていないものがあれば名前を入力できない
-  var check_flag = 0;
-  for(var i = 0; i < check_list.length; i++){
-    if(check_list[i] != true){
-      check_flag = 1;
-      break;
-    }
-  }
-  
-  // 全てのチェックボックスがチェックされていたら入力できるようにする
-  var fg_form = ['fg1','fg2','fg3','fg4','fg5','fg6'];
-  
-  if(check_flag == 0){
-    for(var i=0; i<fg_num; i++){
-      //document.p_form.elements[i].disabled = false;
-      document.fg_form.elements[i].disabled = false;
-      document.getElementById(fg_form[i]).style.borderColor = "#000000";
-    }
-  }else if(check_flag != 0){
-    for(var i=0; i<fg_num; i++){
-      //document.p_form.elements[i].disabled = true;
-      document.fg_form.elements[i].disabled = true;
-    }
-  }
-}
-//setInterval(p_checkbox_check,1000);
-//setInterval(fg_checkbox_check,1000);
-// 1秒ごとにチェックボックスの状態を確認。全てチェックしたらボタンを押せるようにする。
-function flag_check(){
-  var check_list = new Array(8);
-
-  check_list[0] = document.getElementById("check_p1").checked;
-  check_list[1] = document.getElementById("check_p2").checked;
-  check_list[2] = document.getElementById("check_p3").checked;
-  check_list[3] = document.getElementById("check_p4").checked;
-  check_list[4] = document.getElementById("check_p5").checked;
-  check_list[5] = document.getElementById("check_fg1").checked;
-  check_list[6] = document.getElementById("check_fg2").checked;
-  check_list[7] = document.getElementById("check_fg3").checked;
-  
-  // チェックボックスの状態を確認
-  // 押されていないものがあれば名前を入力できない
-  var check_flag = 0;
-  for(var i = 0; i < check_list.length; i++){
-    if(check_list[i] != true){
-      check_flag = 1;
-      break;
-    }
-  }
-  
-  
-  //if(check_flag == 0 && 
-  //   (p1_flag + p2_flag + p3_flag + p4_flag == p_num) &&
-  //   (fg1_flag + fg2_flag + fg3_flag + fg4_flag == fg_num)){
-  
-  if(check_flag == 0){
-    document.send.elements[0].disabled = false;
-  }else{
-    document.send.elements[0].disabled = true;
-  }
-}
-setInterval(flag_check,1000);
-*/
 
 
 // 投票ボタンを押した時の処理
@@ -412,10 +176,7 @@ async function btn_send(){
   for(var i=0; i<fg_num; i++) {
     fg_form[i] = "fg"+String(i+1);
   }
-  /*
-  var p_form = ['p1','p2','p3','p4','p5'];
-  var fg_form = ['fg1','fg2','fg3','fg4','fg5'];
-  */
+
   //各テキストボックスの値を記録するための配列。
   var p_form_value = new Array(5);
   var fg_form_value = new Array(5);
@@ -428,7 +189,6 @@ async function btn_send(){
     fg_form_value[i] = document.getElementById(fg_form[i]).value;
   }
     
-  
   // 自分の名前が入力されている xor 複数同じ名前が含まれている xor 間違った名前が入力されていると投票できなくなる。
   
   // 複数同じ名前が含まれているかのチェック
@@ -460,11 +220,7 @@ async function btn_send(){
   if(p_flag_sum == count_p_num) {
     p_num_check = true;
   }
-  /*
-  if(p1_flag+p2_flag+p3_flag+p4_flag+p5_flag == count_p_num){
-    p_num_check = true;
-  }
-  */
+
   var fg_num_check = false;
   var fg_flag_sum = 0;
   fg_flag.forEach(function(value) {
@@ -473,11 +229,6 @@ async function btn_send(){
   if(fg_flag_sum == count_fg_num) {
     fg_num_check = true;
   }
-  /*
-  if(fg1_flag+fg2_flag+fg3_flag+fg4_flag+fg5_flag == count_fg_num){
-    fg_num_check = true;
-  }
-  */
   
   //再投票を禁止する（既にfirebaseに自分が投票したデータが有る場合は送信できなくする） 
   //ここで投票済みの人物のリストを作り、下のif文内のvoters_list.indexOf(selfID)<0で投票済みかをチェックする
@@ -611,73 +362,6 @@ async function predict(thisInput,thisUl){
   };
 }
 
-/*
-//ここから下追加しました(関)
-function addValue(thisId){
-  let input_sent;//中のtext格納する変数
-  //console.log(thisId.id)
-  //datalistの情報を取得
-  let U = window.document.getElementById("my-friends"+thisId.id)//Uでdatalist内のデータを取得
-  //内部に要素がある場合
-  if(U.innerHTML!=null){
-    //要素を空にする
-    U.innerHTML="";
-  }
-  //console.log(U);
-  //console.log(window.document.getElementById("opt")!=null);
-  //id="neko"(今回はinput)要素を受け取る
-  let idname = thisId.id//idの取得
-  //要素の値をinput_sentへ
-  input_sent = document.getElementById(idname).value;
-  //console.log(input_sent);
-  //これが予測変換用の辞書
-  const names={
-               'seki':'Seki',
-               'mochida':'Mochida', 
-               'kase':'Kase', 
-               'chou':'Chou',
-               'you':'You',
-               'koyama':'Koyama',
-               'ghita':'Ghita',
-               'ogino':'Ogino',
-               'ikeda':'Ikeda',
-               'sakamoto':'Sakamoto',
-               'maemoto':'Maemoto',
-               'Seki':'Seki',
-               'Mochida':'Mochida', 
-               'Kase':'Kase', 
-               'Chou':'Chou',
-               'You':'You',
-               'Koyama':'Koyama',
-               'Ghita':'Ghita',
-               'Ogino':'Ogino',
-               'Ikeda':'Ikeda',
-               'Sakamoto':'Sakamoto',
-               'Maemoto':'Maemoto',
-              }
-              
-  //const names = ['関', '持田', '加瀬', '張','姚','小山','Ghita','荻野','池田','坂元','前本','せき','もちだ'];
-  //配列内の単語でfor
-  for(let key in names){
-    //もしも、配列内の要素の一番初めの要素が合致していた場合(現段階では先頭要素のみ←と思っていたが、後ろ要素はautocompleteが自動的に見てくれているので実質全体見れている)
-    if(String(key).charAt(0)==input_sent.charAt(0)){
-      //datalist内部のoption要素の作成(これが予測変換として表示される)
-      let option = document.createElement('option');
-      option.id="opt"+thisId.id;//idの設定
-      //console.log(option);
-      //optionの値を設定する
-      option.value = String(names[key]);//辞書のValueをlistに追加
-      option.innerHTML = String(names[key]);
-      //console.log(toString.call(option.value));
-      //console.log(option.value);
-      //datalist内に追加
-      U.appendChild(option);//子要素としてappendする
-    }
-    
-  }
-  
-}
-*/
 
 // 6秒ごとに自分の最終ログイン状態をアップデート
 setInterval(function(){return showParticipant(db)}, 6*1000);
