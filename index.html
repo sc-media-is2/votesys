@@ -176,16 +176,16 @@
           disabled
         />
       </form>
-      
+
       <!-- 入力フォームの数に応じて背景の高さを変える -->
       <script>
         var back_height = 180;
         if(Math.max(p_num, fg_num) > 4) {
           back_height += (Math.max(p_num, fg_num)-4)*40;
         }
-        $(".p_explain .p_vote .fg_explain .fg_vote").css("height", String(back_height)+"px");
+        $(".p_explain, .p_vote, .fg_explain, .fg_vote").css("height", String(back_height)+"px");
       </script>
-
+      
     </div>
     <br>
     <br>
