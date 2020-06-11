@@ -1,5 +1,8 @@
 //結果画面のjsファイル
+/*-------------------------------*/
+
 let Year = 2020;
+/*-------------------------------*/
 
 // googleチャートAPIのロード
 google.charts.load("current", { packages: ["corechart"] });
