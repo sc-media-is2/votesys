@@ -20,7 +20,7 @@ var name_list = {
   'Matsubara':['松原','Matsubara','matsubara','マツバラ','まつばら']
 };
 
-//PとFGの人数
+//PとFGの人数(ここを変更すると入力フォームの数が変わります)
 //指定した数だけフォームに入力できる & firebaseにデータが送信される、ようにしたいな。
 var p_num = 6;
 var fg_num = 6;
