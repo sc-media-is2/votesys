@@ -5,7 +5,7 @@
 - result.html が結果画面
 - read_firebase.js はfirebase関連
 - login.js はログイン画面用のjsファイル
-- vote.cssとvote.jsは投票画面用のcssとjsファイル(年度毎に更新して欲しいのはコレ)
+- vote.cssとvote.jsは投票画面用のcssとjsファイル
 - result.cssとresult.jsは結果画面用のcssとjsファイル
 - utilslib.js が全体用のjsファイル
 - index_old.html、vote_old.css、vote_old.jsについては動作に問題が無ければ削除して大丈夫です
