@@ -179,11 +179,28 @@
 
       <!-- 入力フォームの数に応じて背景の高さを自動で変更 -->
       <script>
-        var back_height = 180;
-        if(Math.max(p_num, fg_num) > 4) {
-          back_height += (Math.max(p_num, fg_num)-4)*40;
+        function isSmartPhone() {
+          if (window.matchMedia && window.matchMedia('(max-device-width: 640px)').matches) {
+            return true;
+          } else {
+            return false;
+          }
         }
-        $(".p_explain, .p_vote, .fg_explain, .fg_vote").css("height", String(back_height)+"px");
+        
+        if(isSmartPhone) {
+          var back_height = 260;
+          if(Math.max(p_num, fg_num) > 4) {
+            back_height += (Math.max(p_num, fg_num)-4)*60;
+          }
+          $(".p_explain, .p_vote, .fg_explain, .fg_vote").css("height", String(back_height)+"px");
+          
+        } else {
+          var back_height = 180;
+          if(Math.max(p_num, fg_num) > 4) {
+            back_height += (Math.max(p_num, fg_num)-4)*40;
+          }
+          $(".p_explain, .p_vote, .fg_explain, .fg_vote").css("height", String(back_height)+"px");
+        }
       </script>
       
     </div>
