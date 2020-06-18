@@ -89,7 +89,7 @@
           
           <span id="input_p_forms"></span>
           <script>
-            for(var i=0; i<p_num; i++) {
+            for(var i=0; i<P_NUM; i++) {
               var p_id = "p"+String(i+1);
               var ul_p_id = "ul_p"+String(i+1);
               
@@ -146,7 +146,7 @@
           
           <span id="input_fg_forms"></span>
           <script>
-            for(var i=0; i<fg_num; i++) {
+            for(var i=0; i<FG_NUM; i++) {
               var fg_id = "fg"+String(i+1);
               var ul_fg_id = "ul_fg"+String(i+1);
               
@@ -189,15 +189,15 @@
         
         if(isSmartPhone) {
           var back_height = 260;
-          if(Math.max(p_num, fg_num) > 4) {
-            back_height += (Math.max(p_num, fg_num)-4)*60;
+          if(Math.max(P_NUM, FG_NUM) > 4) {
+            back_height += (Math.max(P_NUM, FG_NUM)-4)*60;
           }
           $(".p_explain, .p_vote, .fg_explain, .fg_vote").css("height", String(back_height)+"px");
           
         } else {
           var back_height = 180;
-          if(Math.max(p_num, fg_num) > 4) {
-            back_height += (Math.max(p_num, fg_num)-4)*40;
+          if(Math.max(P_NUM, FG_NUM) > 4) {
+            back_height += (Math.max(P_NUM, FG_NUM)-4)*40;
           }
           $(".p_explain, .p_vote, .fg_explain, .fg_vote").css("height", String(back_height)+"px");
         }
