@@ -102,6 +102,22 @@ async function drawChart(result, locate) {
   table[0] = ["member"]
     .concat(Array(table[0].length - 2).fill(""))
     .concat([table[0][table[0].length - 1]]);
+  
+  for(let i=1; i<table.length; i++){
+    if(table[i].length < table[0].length){
+      //人に対して少なかった場合, 0で埋める
+      while(table[i].length < table[0].length){
+        table[i].push(0);
+      }
+    }else if(table[i].length > table[0].length){
+      //人に対して多かった場合, 一番小さい要素を削除する
+      //多分ソートされてる？のでpopすればok
+      while(table[i].length > table[0].length){
+        table[i].pop();
+      }
+    }
+  }
+  
   const data = google.visualization.arrayToDataTable(table);
 
   const options = {

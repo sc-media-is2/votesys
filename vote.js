@@ -1,10 +1,10 @@
 //投票画面のjsファイル
 /*-------------------------------*/
-let Year = 2020;
+const YEAR = 2020;
 
 //このリストは予測候補と入力時の名前のエラーチェックと再投票防止に使います。
 //毎年更新をお願いします。
-var name_list = {
+const NAME_LIST = {
   'Ghita':['Ghita','Ghita','ghita','ギータ','ぎーた'],
   'Kase':['加瀬','Kase','kase','カセ','かせ'],
   'Seki':['関','Seki','seki','セキ','せき'],
@@ -22,79 +22,66 @@ var name_list = {
 
 //PとFGの人数(ここを変更すると入力フォームの数が変わります)
 //指定した数だけフォームに入力できる & firebaseにデータが送信される、ようにしたいな。
-var p_num = 6;
-var fg_num = 6;
+const P_NUM = 6;
+const FG_NUM = 6;
 /*-------------------------------*/
 
-
-
-
 //各入力フォームの名前が正しいかの確認用のフラグ
-var p_flag = [];
-for(var i=0; i<p_num; i++) {
-  p_flag[i] = 0;
-}
-var fg_flag = [];
-for(var i=0; i<fg_num; i++) {
-  fg_flag[i] = 0;
-}
+//人数では？
+let p_flag = Array(P_NUM).fill(0);
+let fg_flag = Array(FG_NUM).fill(0);
 
-//入力フォーム内にここに書かれていない文字列が入ると赤色に変化する
-var list = [];
-Object.keys(name_list).forEach(function(key) {
+//名前探索用
+let all_members_name=[];
+Object.keys(NAME_LIST).forEach(function(key) {
   this[key].forEach(function(val) {
-    list.push(val);
+    all_members_name.push(val);
   });
-}, name_list);
+}, NAME_LIST);
 
-var name_list_forMap = [];
-Object.keys(name_list).forEach(function(key) {
-  var names = [];
+
+let name_list_forMap = [];
+Object.keys(NAME_LIST).forEach(function(key) {
+  let names = [];
   this[key].forEach(function(val) {
     names.push(val);
   });
   name_list_forMap.push([key, names]);
-}, name_list);
+}, NAME_LIST);
 
+//固定ID変換用
 const dictMap2 = new Map();
 name_list_forMap.forEach(row => {
   row[1].forEach(name => dictMap2.set(name, row[0]))
 });
 
 //firebase内の投票データからその日投票済みの人の名前を取得して格納するリスト。再投票を禁止するために使用。
-var voters_list = [];
+let voters_list = [];
 
 //selfID:投票者のID。ログイン時にデータベース(user_name/<year>)より取得して割り当てられる。
 //const db = firebase.firestore();
-var login_user_email = "";
-getUserName(db,'/user_name/'+String(Year));
-var selfID = "";
+let login_user_email = "";
+getUserName(db,`/user_name/${YEAR}`);
+let selfID = "";
 
 
-// 入力フォーム内に入力された名前を確認、listに登録されたもの以外が入ると赤色に変化する。
+// 入力フォーム内に入力された名前を確認、all_members_nameに登録されたもの以外が入ると赤色に変化する。
 function submit(thisId){
-  var value = document.getElementById(thisId).value;
+  const name = document.getElementById(thisId).value;
+  let p_ids = Array(P_NUM).fill().map((_, i) => `p${i+1}`);
+  let fg_ids = Array(FG_NUM).fill().map((_, i) => `fg${i+1}`);
   
-  var p_ids = []
-  for(var i=0; i<p_num; i++) {
-    p_ids[i] = "p"+String(i+1);
-  }
-  var fg_ids = []
-  for(var i=0; i<fg_num; i++) {
-    fg_ids[i] = "fg"+String(i+1);
-  }
-  
-  if(list.indexOf(value) >= 0){
+  if(all_members_name.indexOf(name) >= 0){
     document.getElementById(thisId).style.backgroundColor = "#FFFFFF";
     
-    for(var i=0; i<p_num; i++) {
-      if(thisId == p_ids[i]) {
+    for(let i=0; i<P_NUM; i++) {
+      if(thisId === p_ids[i]) {
         p_flag[i] = 1;
       }
     }
     
-    for(var i=0; i<fg_num; i++) {
-      if(thisId == fg_ids[i]) {
+    for(let i=0; i<FG_NUM; i++) {
+      if(thisId === fg_ids[i]) {
         fg_flag[i] = 1;
       }
     }
@@ -104,13 +91,13 @@ function submit(thisId){
   }else{
     document.getElementById(thisId).style.backgroundColor = "mistyrose";
     
-    for(var i=0; i<p_num; i++) {
+    for(let i=0; i<P_NUM; i++) {
       if(thisId == p_ids[i]) {
         p_flag[i] = 0;
       }
     }
     
-    for(var i=0; i<fg_num; i++) {
+    for(let i=0; i<FG_NUM; i++) {
       if(thisId == fg_ids[i]) {
         fg_flag[i] = 0;
       }
@@ -138,6 +125,9 @@ function connecttext(textid_list,  checkboxid_list ) {
   }
 }
 
+//文言チェック用
+let text_p_list = [];
+let text_fg_list = [];
 var check_p_list = [
   "check_p1",
   "check_p2",
@@ -145,9 +135,8 @@ var check_p_list = [
   "check_p4",
   "check_p5",
 ];
-var text_p_list = [];
-for(var i=0; i<p_num; i++) {
-  text_p_list[i] = "p"+String(i+1);
+for(let i=0; i<P_NUM; i++) {
+  text_p_list[i] = `p${i+1}`;
 }
 text_p_list.push("submit_vote");
 
@@ -156,78 +145,73 @@ var check_fg_list = [
   "check_fg2",
   "check_fg3",
 ];
-var text_fg_list = [];
-for(var i=0; i<fg_num; i++) {
-  text_fg_list[i] = "fg"+String(i+1);
+for(let i=0; i<FG_NUM; i++) {
+  text_fg_list[i] = `fg${i+1}`;
 }
-text_p_list.push("submit_vote");
+text_fg_list.push("submit_vote");
 
+async function btn_send(){
+  //テキストボックスのidをまとめた配列。検索しやすくするために用意した
+  let p_form = Array(P_NUM).fill().map((_, i) => `p${i+1}`);
+  let fg_form = Array(FG_NUM).fill().map((_, i) => `fg${i+1}`);
 
-// 投票ボタンを押した時の処理
-async function btn_send(){  
-  
-  /* firebaseにデータを送信 */
-  //テキストボックスのidをまとめた配列。検索しやすくするために用意した。
-  var p_form = [];
-  for(var i=0; i<p_num; i++) {
-    p_form[i] = "p"+String(i+1);
-  }
-  var fg_form = [];
-  for(var i=0; i<fg_num; i++) {
-    fg_form[i] = "fg"+String(i+1);
-  }
-
-  //各テキストボックスの値を記録するための配列。
-  var p_form_value = new Array(5);
-  var fg_form_value = new Array(5);
+  //各テキストボックスの値を記録するための配列
+  let p_form_value = [];
+  let fg_form_value = [];
   
   //PとFGの数だけテキストボックスの値を取得
-  for(let i=0; i<p_num; i++){
+  for(let i=0; i<P_NUM; i++){
     p_form_value[i] = document.getElementById(p_form[i]).value;
   }
-  for(let i=0; i<fg_num; i++){
+  for(let i=0; i<FG_NUM; i++){
     fg_form_value[i] = document.getElementById(fg_form[i]).value;
   }
-    
-  // 自分の名前が入力されている xor 複数同じ名前が含まれている xor 間違った名前が入力されていると投票できなくなる。
-  
-  // 複数同じ名前が含まれているかのチェック
-  var p_fg_form_value = p_form_value.concat(fg_form_value);
-  var multipleCheck = p_fg_form_value.filter(
-  function (x, i, self) {
-    return self.indexOf(x) === i && i !== self.lastIndexOf(x);
-  });
-  
-  // 間違った名前が入力されているかのチェック
-  var count_p_num = 0;
-  for(let i = 0; i < p_num; i++){
-    if(p_form_value[i] != "") {
-      count_p_num += 1;
-    }
-  }
-  var count_fg_num = 0;
-  for(let i = 0; i < fg_num; i++){
-    if(fg_form_value[i] != "") {
-      count_fg_num += 1;
-    }
-  }
-  
-  var p_num_check = false;
-  var p_flag_sum = 0;
-  p_flag.forEach(function(value) {
-    p_flag_sum += value;
-  })
-  if(p_flag_sum == count_p_num) {
-    p_num_check = true;
-  }
 
-  var fg_num_check = false;
-  var fg_flag_sum = 0;
-  fg_flag.forEach(function(value) {
-    fg_flag_sum += value;
-  })
-  if(fg_flag_sum == count_fg_num) {
-    fg_num_check = true;
+  // 複数同じ名前が含まれているか
+  function checkSameName(p_form_value, fg_form_value){
+    let p_fg_form_value = p_form_value.concat(fg_form_value);
+    let collisionName = p_fg_form_value.filter(
+      function (x, i, self) {
+        return self.indexOf(x) === i && i !== self.lastIndexOf(x);
+      });
+    return collisionName.length;
+  }
+  
+  // 間違った名前が入力されているか
+  function checkMistakeNumberOfMember(p_form_value, fg_form_value){
+    function Counter(array) {
+      var count = {};
+      array.forEach(val => count[val] = (count[val] || 0) + 1);
+      return count;
+    }
+
+    let count_p_num = 0;
+    for(let i = 0; i < P_NUM; i++){
+      if(p_form_value[i] != "") {
+        count_p_num += 1;
+      }
+    }
+    let count_fg_num = 0;
+    for(let i = 0; i < FG_NUM; i++){
+      if(fg_form_value[i] != "") {
+        count_fg_num += 1;
+      }
+    }
+
+    //member_overflow: 人数が溢れる場合はtrue
+    let p_member_overflow = false;
+    let fg_member_overflow = false;
+    let p_flag_count = Counter(p_flag).true;
+    let fg_flag_count = Counter(fg_flag).true;
+    if(p_flag_count !== count_p_num){
+      p_member_overflow = true;
+    }
+    if(fg_flag_count !== count_fg_num){
+      fg_member_overflow = true;
+    }
+
+    //どちらもfalseでなければならない
+    return(p_member_overflow || fg_member_overflow);
   }
   
   //再投票を禁止する（既にfirebaseに自分が投票したデータが有る場合は送信できなくする） 
@@ -235,13 +219,14 @@ async function btn_send(){
   voters_list = [];
   await checkRevote();
   
+  //自分が入っていない && 重複する名前がない && 間違った入力がない && 入力が0でない
   if(p_form_value.indexOf(selfID) < 0 && fg_form_value.indexOf(selfID) < 0 && 
-     multipleCheck <= 0 && p_num_check && fg_num_check && count_p_num != 0 && 
-     count_fg_num != 0 && voters_list.indexOf(selfID) < 0){
+     checkSameName(p_form_value, fg_form_value) === 0 && !checkMistakeNumberOfMember(p_form_value, fg_form_value) && 
+     count_p_num !== 0 && count_fg_num !== 0 && voters_list.indexOf(selfID) < 0){
     //各フォームのデータを成形してfirebaseに送信
-    for(let i = 0; i < p_num; i++){
+    for(let i = 0; i < P_NUM; i++){
       if(p_form_value[i] != "") {
-        var p_voteData = {
+        const p_voteData = {
           votersId: dictMap2.get(selfID),
           votedId: dictMap2.get(p_form_value[i]),
           voteRank: i+1,
@@ -250,9 +235,9 @@ async function btn_send(){
         await addVoteData(p_voteData);
       }
     }
-    for(let i = 0; i < fg_num; i++){
+    for(let i = 0; i < FG_NUM; i++){
       if(fg_form_value[i] != ""){
-        var fg_voteData = {
+        const fg_voteData = {
           votersId: dictMap2.get(selfID),
           votedId: dictMap2.get(fg_form_value[i]),
           voteRank: i+1,
@@ -263,14 +248,16 @@ async function btn_send(){
     }
 
     //投票結果画面へ遷移
-    var move = function(){
+    const move = function(){
       window.location.href = "result.html"
     } 
     setTimeout(move, 1200);
   }else{
+    console.log(fg_form_value);
+    console.log(p_form_value);
     const checks = document.getElementsByClassName('check');
     checks[0].innerHTML = "自分の名前や間違った名前、同じ名前を複数個入力している可能性があります。";
-    //alert('自分の名前や間違った名前、同じ名前を複数個入力している可能性があります。');
+    window.scrollTo(0,0);
   }
 }
 
