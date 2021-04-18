@@ -1,23 +1,24 @@
 //投票画面のjsファイル
 /*-------------------------------*/
-let Year = 2020;
+let Year = 2021;
 
 //このリストは予測候補と入力時の名前のエラーチェックと再投票防止に使います。
 //毎年更新をお願いします。
 var name_list = {
   'Ghita':['Ghita','Ghita','ghita','ギータ','ぎーた'],
-  'Kase':['加瀬','Kase','kase','カセ','かせ'],
-  'Seki':['関','Seki','seki','セキ','せき'],
-  'Zhang':['張','Zhang','zhang','チョウ','ちょう'],
+  'Matsubara':['松原','Matsubara','matsubara','マツバラ','まつばら'],
   'Ogino':['荻野','Ogino','ogino','オギノ','おぎの'],
   'Ikeda':['池田','Ikeda','ikeda','イケダ','いけだ'],
   'Maemoto':['前本','Maemoto','maemoto','マエモト','まえもと'],
   'Sakamoto':['坂元','Sakamoto','sakamoto','サカモト','さかもと'],
+  'Ni':['倪','Ni','ni','ニー','にー'],
   'Gotou':['後藤','Gotou','gotou','ゴトウ','ごとう'],
   'Kobayashi':['小林','Kobayashi','kobayashi','コバヤシ','こばやし'],
   'Ueda':['植田','Ueda','ueda','ウエダ','うえだ'],
-  'Ni':['倪','Ni','ni','ニー','にー'],
-  'Matsubara':['松原','Matsubara','matsubara','マツバラ','まつばら']
+  'Ogawa':['小川','Ogawa','ogawa','オガワ','おがわ'],
+  'Sasakawa':['笹川','Sasakawa','sasakawa','ササカワ','ささかわ'],
+  'Tsutsumi':['堤','Tsutsumi','tsutsumi','ツツミ','つつみ'],
+  'Hayashi':['林','Hayashi','hayashi','ハヤシ','はやし']
 };
 
 //PとFGの人数(ここを変更すると入力フォームの数が変わります)
